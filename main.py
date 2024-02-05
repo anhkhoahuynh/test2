@@ -216,6 +216,10 @@ def scale_mau(mau):
 def home():
   return render_template('index.html')
 
+if __name__ == '__main__':
+  app.run()
+
+
 @app.route('/getprediction',methods=['POST'])
 
 def getprediction():
@@ -258,3 +262,5 @@ def getprediction():
                         e= '{}'.format(final_input_scale)
                          )
 app.run()
+if __name__ == '__main__':
+  app.run()
