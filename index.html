@@ -1,0 +1,171 @@
+<html >
+<head>
+  <title>Prediction of precipitation phenomenon in mineral water</title>  
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="icon" type="image/x-icon" href="https://www.vihawa.com/wp-content/uploads/2017/02/nuoc-khoang-vinh-hao-binh-20-lit.webp">
+  <style> 
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	background: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%);
+	font-family: sans-serif;
+	font-weight: 100;
+}
+
+.container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+table {
+	width: 800px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+	color: #333333;
+}
+
+th {
+	text-align: left;
+}
+
+thead {
+	th {
+		background-color: #55608f;
+	}
+}
+
+button {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: green;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+button:hover {background-color: #3e8e41}
+
+button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 2px #666;
+  transform: translateY(4px);
+}
+tbody {
+	tr {
+		&:hover {
+			background-color: rgba(255,255,255,0.3);
+		}
+	}
+	td {
+		position: relative;
+		&:hover {
+			&:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: -9999px;
+				bottom: -9999px;
+				background-color: rgba(255,255,255,0.2);
+				z-index: -1;
+			}
+		}
+	}
+.ketluan[data-status="No precipitation"]:after {
+ content : "No precipitation";
+ color : green;
+ font-weight: bold
+}
+
+.ketluan[data-status="Precipitation"]:after {
+ content : "Precipitation";
+ color : red;
+ font-weight: bold
+}
+
+  </style>
+</head>
+
+<body>
+<div class="container">   
+<h1>Prediction of precipitation phenomenon in mineral water</h1> 
+
+<div>
+    <table>
+  <form action="{{ url_for('getprediction')}}"method="post">
+  <tr>
+    <th>Feature</th>
+    <th>HCO<sub>3</sub><sup>-</sup></th>
+    <th>Mg<sup>2+</sup></th>
+    <th>Ca<sup>2+</sup></th>
+    <th>pH</th>
+    <th>TDS</th>
+    <th></th>
+  </tr>
+  <tr>
+    <td><strong>Input</strong></td>
+    <td><input type="number" step="any" name="HCO3" required="required" min="427" max="462.08" /></td>
+    <td><input type="number" step="any" name="Mg"  required="required" min="0.18" max="1.02" /></td>
+    <td><input type="number" step="any" name="Ca"  required="required" min="0.4" max="1.81"  /></td>
+    <td><input type="number" step="any" name="pH" required="required" min="7.46" max="8.07"  /></td>
+    <td><input type="number" step="any" name="TDS" required="required" min="361.65" max="387.3"  /> </td>
+    <td><button type="submit" class="btn btn-primary btn-block btn-large">Get prediction</button></td>
+  </tr>
+  </form>
+    <tr>
+    <td><strong>Raw data</strong></td>
+    <td>{{raw_HCO3}}</td>
+    <td>{{raw_Mg}}</td>
+    <td>{{raw_Ca}}</td>
+    <td>{{raw_pH}}</td>
+    <td>{{raw_TDS}}</td>
+    <td></td>
+  </tr>
+  <tr>
+      <td><strong>Scaled data</strong></td>
+    <td>{{scale_HCO3}}</td>
+    <td>{{scale_Mg}}</td>
+    <td>{{scale_Ca}}</td>
+    <td>{{scale_pH}}</td>
+    <td>{{scale_TDS}}</td>
+    <td></td>
+  </tr>
+   <tr>
+      <td><strong>Result</strong></td>
+    <td data-status="{{ketluan}}" class="ketluan"><strong></strong></td>
+    <td colspan="5"><p>Ratio of negative/positve: </p><strong>{{tyle}}</strong></td>
+    
+  </tr>
+</table>
+</div>
+ <div style="padding-top: 20px;">
+  <i>by Huynh Anh Khoa</i> 
+  <br>
+  {{a}}
+  {{b}}<br>
+  {{c}}<br>
+  {{d}}<br>
+  {{e}}
+  </div>
+ </div>
+</body>
+</html>
